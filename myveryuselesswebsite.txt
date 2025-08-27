@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Useless Website (But Kinda Cool)</title>
+  <style>
+    :root {
+      --bg1: #0ea5e9; /* sky-500 */
+      --bg2: #a78bfa; /* violet-400 */
+      --bg3: #22d3ee; /* cyan-400 */
+      --card: rgba(255,255,255,0.14);
+      --border: rgba(255,255,255,0.35);
+      --text: #ffffff;
+      --accent: #ffd54a;
+      --good: #34d399;
+      --bad: #fb7185;
+    }
+
+    /* Animated gradient background */
+    body {
+      margin: 0;
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      min-height: 100svh;
+      background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3));
+      background-size: 200% 200%;
+      animation: shift 14s ease-in-out infinite;
+      overflow-x: hidden;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">✨</text></svg>') 2 2, auto;
+    }
+    @keyframes shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Layout */
+    .wrap {
+      display: grid;
+      place-items: center;
+      min-height: 100svh;
+      padding: 24px;
+    }
+
+    .card {
+      width: min(900px, 92vw);
+      backdrop-filter: blur(12px) saturate(130%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      padding: clamp(18px, 3.5vw, 40px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Fancy heading */
+    h1 {
+      font-size: clamp(28px, 6vw, 64px);
+      margin: 0 0 12px;
+      line-height: 1.05;
+      text-shadow: 0 4px 20px rgba(0,0,0,.25);
+      letter-spacing: 0.5px;
+    }
+    .sub {
+      opacity: .9;
+      margin-top: 0;
+      margin-bottom: 24px;
+    }
+
+    /* Useless big button */
+    .panic {
+      display: inline-grid;
+      place-items: center;
+      font-size: clamp(16px, 2.4vw, 22px);
+      padding: 16px 26px;
+      background: radial-gradient(120% 120% at 30% 20%, #fff 0%, #ffe082 40%, #ffb300 100%);
+      color: #422006;
+      border: none;
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.8);
+      transform: translateZ(0);
+      transition: transform .12s ease, filter .2s;
+      cursor: pointer;
+      user-select: none;
+    }
+    .panic:hover { transform: translateY(-2px) scale(1.03) rotate(-.5deg); filter: saturate(110%); }
+    .panic:active { transform: translateY(2px) scale(.98) rotate(.5deg); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    @media (min-width: 768px) {
+      .grid { grid-template-columns: 1.1fr 1fr; gap: 24px; }
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.07);
+      border: 1px dashed var(--border);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    /* Progress bar */
+    .bar {
+      height: 14px;
+      background: rgba(255,255,255,.2);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #bbf7d0, #86efac, #34d399);
+      box-shadow: 0 0 18px rgba(52, 211, 153, 0.7);
+      border-radius: 999px;
+      transition: width .2s ease;
+    }
+
+    .stats { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; font-size: 14px; opacity: .95; }
+    .badge { padding: 6px 10px; background: rgba(0,0,0,.2); border-radius: 999px; border: 1px solid rgba(255,255,255,.25); }
+
+    /* Floating emoji particles */
+    .particle {
+      position: fixed;
+      left: 0; top: 0;
+      pointer-events: none;
+      will-change: transform, opacity;
+      font-size: 22px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.25));
+    }
+
+    /* Score display */
+    .score {
+      font-size: clamp(18px, 2.2vw, 22px);
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+
+    /* Konami Potato Mode */
+    .potato body, body.potato {
+      background: repeating-linear-gradient(45deg, #f7e0a3 0 14px, #f2d38b 14px 28px);
+      animation: none;
+    }
+    .potato .card, body.potato .card { background: rgba(255,248,225,.6); }
+    body.potato * { font-family: "Comic Sans MS", "Comic Sans", system-ui; }
+
+    .footer { margin-top: 18px; font-size: 12px; opacity: .8; text-align: center; }
+    a.link { color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>🌀 The Useless Website</h1>
+      <p class="sub">Warning: absolutely no productivity will occur here. Side effects may include giggles and excessive sparkles.</p>
+
+      <div class="grid">
+        <div class="panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+            <div class="score">Useless Points: <strong id="points">0</strong></div>
+            <button class="panic" id="redBtn" aria-label="Do not press this button">🚫 DO NOT PRESS</button>
+          </div>
+
+          <div style="margin-top:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <div id="task">Calculating your coolness…</div>
+              <div id="percent">0%</div>
+            </div>
+            <div class="bar" aria-hidden="true"><div class="fill" id="fill"></div></div>
+            <div class="stats">
+              <span class="badge" id="mood">Mood: ✨</span>
+              <span class="badge" id="vibe">Vibe: Chaotic Good</span>
+              <span class="badge" id="lvl">Level: Beginner Button Presser</span>
+            </div>
+            <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+              <button class="panic" id="buyNothing">Spend 100 points on… Nothing</button>
+              <button class="panic" id="toggleDark">Toggle Dark Mode (it does nothing)</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 style="margin:6px 0 10px;">Patch Notes (Totally Real)</h3>
+          <ul id="log" style="margin:0; padding-left:18px; line-height:1.6;">
+            <li>v∞.∞: Fixed a bug where nothing happened too quickly.</li>
+            <li>v0.0.0: Introduced 0 features and 12 sparkles.</li>
+            <li>v-prealpha: Potato Mode discovered by ancient sages.</li>
+          </ul>
+          <p style="margin-top:12px; opacity:.9;">Pro tip: Type the Konami code for a secret. (↑ ↑ ↓ ↓ ← → ← → B A)</p>
+        </div>
+      </div>
+
+      <div class="footer">© 1997–2025 Department of Absolutely Nothing. Built with 100% recyclable jokes.</div>
+    </div>
+  </div>
+
+  <script>
+    // Tiny helper utils
+    const $ = (sel, el = document) => el.querySelector(sel);
+    const rand = (min, max) => Math.random() * (max - min) + min;
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+    // Elements
+    const fill = $('#fill');
+    const percent = $('#percent');
+    const task = $('#task');
+    const mood = $('#mood');
+    const lvl = $('#lvl');
+    const redBtn = $('#redBtn');
+    const pointsEl = $('#points');
+    const log = $('#log');
+
+    let points = 0;
+
+    // Fake progress that never quite finishes
+    const tasks = [
+      'Calculating your coolness…',
+      'Counting invisible ducks…',
+      'Rearranging pixels neatly…',
+      'Charging the vibe crystals…',
+      'Negotiating with gravity…',
+      'Warming up the punchlines…',
+      'Defragmenting your aura…',
+      'Tickling the CPU…',
+    ];
+
+    let p = 0;
+    setInterval(() => {
+      p += Math.random() * 6;
+      if (p >= 99) p = Math.random() * 60; // never reaches 100%
+      fill.style.width = p.toFixed(1) + '%';
+      percent.textContent = Math.floor(p) + '%';
+      if (Math.random() < 0.12) task.textContent = pick(tasks);
+    }, 420);
+
+    // Random mood ticker
+    const moods = ['✨', '😎', '🦆', '🧠', '🥔', '🦖', '🪩', '🛸', '🌈'];
+    setInterval(() => { mood.textContent = 'Mood: ' + pick(moods); }, 1500);
+
+    // Level up nonsense
+    const levels = [
+      'Beginner Button Presser', 'Intermediate Button Disturber', 'Senior Button Botherer',
+      'Principal Button Philosopher', 'C-Level Button Executive', 'Legendary Button Bard'
+    ];
+
+    // Floating emoji particles
+    const emojis = ['✨','🦆','🥔','🫧','🍕','🐸','💫','🪄','🧊','🧽','🎈','🌟'];
+    function spawnParticle(x, y) {
+      const e = document.createElement('div');
+      e.className = 'particle';
+      e.textContent = pick(emojis);
+      document.body.appendChild(e);
+      const size = rand(14, 36);
+      e.style.fontSize = size + 'px';
+      const dx = rand(-80, 80);
+      const dy = rand(-160, -60);
+      const rot = rand(-90, 90);
+      const dur = rand(900, 1600);
+      e.style.left = x + 'px';
+      e.style.top = y + 'px';
+      const start = performance.now();
+      (function anim(now){
+        const t = Math.min(1, (now - start) / dur);
+        const ease = t<.5? 2*t*t : -1+(4-2*t)*t; // easeInOutQuad
+        e.style.transform = `translate(${dx*ease}px, ${dy*ease}px) rotate(${rot*ease}deg)`;
+        e.style.opacity = (1 - t).toFixed(2);
+        if (t < 1) requestAnimationFrame(anim); else e.remove();
+      })(start);
+    }
+
+    // Useless points system
+    function addPoints(n) {
+      points += n;
+      pointsEl.textContent = points;
+      if (points % 100 === 0) {
+        lvl.textContent = 'Level: ' + pick(levels);
+        logInsert(`Leveled up to <strong>${lvl.textContent.replace('Level: ','')}</strong>.`);
+      }
+    }
+
+    function logInsert(html) {
+      const li = document.createElement('li');
+      li.innerHTML = html;
+      log.prepend(li);
+    }
+
+    // Button Shenanigans
+    const badMessages = [
+      'You were explicitly told not to press that.',
+      'Button pressed. Universe unchanged.',
+      'Bold of you. Respect.',
+      'Achievement unlocked: Can\'t Read Warnings.',
+      'This button does nothing. Probably.',
+      'Nice click. 10/10 form.',
+      'Quack. (That\'s duck for “why tho”)'
+    ];
+
+    redBtn.addEventListener('click', (e) => {
+      const { clientX:x, clientY:y } = e;
+      for (let i=0;i<40;i++) spawnParticle(x, y);
+      document.body.animate([
+        { transform: 'rotate(0deg)' },
+        { transform: 'rotate(2deg)' },
+        { transform: 'rotate(0deg)' }
+      ], { duration: 280, easing: 'ease-in-out' });
+      addPoints(7);
+      logInsert(pick(badMessages));
+    });
+
+    // Click anywhere for sparkly joy + points
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('button')) return; // buttons handle themselves
+      for (let i=0;i<16;i++) spawnParticle(e.clientX, e.clientY);
+      addPoints(1);
+    });
+
+    // Spend points on Nothing (literally deducts and adds a line)
+    $('#buyNothing').addEventListener('click', () => {
+      if (points < 100) { logInsert('Insufficient points to buy Nothing. How ironic.'); return; }
+      points -= 100; pointsEl.textContent = points;
+      logInsert('You bought <em>Nothing</em>. It sparks no joy.');
+      for (let i=0;i<20;i++) spawnParticle(innerWidth*0.5, innerHeight*0.5);
+    });
+
+    // Dark mode toggle that does nothing except log
+    $('#toggleDark').addEventListener('click', () => {
+      logInsert('Dark Mode toggled. Nothing changed. How mysterious.');
+    });
+
+    // Konami code → Potato Mode
+    const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    const buffer = [];
+    window.addEventListener('keydown', (e) => {
+      buffer.push(e.key);
+      if (buffer.length > konami.length) buffer.shift();
+      if (konami.every((k,i)=> buffer[i]?.toLowerCase() === k.toLowerCase())) {
+        document.body.classList.toggle('potato');
+        const state = document.body.classList.contains('potato') ? 'ON' : 'OFF';
+        logInsert(`🥔 Potato Mode ${state}. Everything is suddenly more starchy.`);
+        for (let i=0;i<80;i++) spawnParticle(rand(0, innerWidth), rand(0, innerHeight));
+      }
+    });
+
+    // Pointer sparkle trail
+    let lastTrail = 0;
+    window.addEventListener('pointermove', (e) => {
+      const now = performance.now();
+      if (now - lastTrail > 20) {
+        spawnParticle(e.clientX, e.clientY);
+        lastTrail = now;
+      }
+    });
+
+    // Easter egg when out of focus
+    const originalTitle = document.title;
+    window.addEventListener('blur', () => document.title = 'Come back, we have sparkles!');
+    window.addEventListener('focus', () => document.title = originalTitle);
+  </script>
+</body>
+</html>
